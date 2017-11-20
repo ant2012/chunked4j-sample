@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chunked4j sample</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
+    <link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
+</head>
+<body>
+<p>
+    Chunked4j sample<br/>
+</p>
+<form id="fss-dropzone" class="dropzone" method="POST" enctype="multipart/form-data" action="chunked/">
+</form>
+<script>
+    Dropzone.options.fssDropzone = {
+        timeout: 0,
+        chunking: true,
+        chunkSize: 10240000,//Bytes
+        forceChunking: true,
+        maxFilesize: 4000,//Mb
+        init: function() {
+            this.on("error", function(file, errorMessage) {
+                var message = JSON.stringify(errorMessage);
+                $(file.previewElement).find('.dz-error-message').text(message);
+                alert(message);
+            });
+            this.on("success", function(file) {
+                $.ajax({
+                    url: "chunked/?fileId="+file.upload.uuid,
+                    success: function (data) {
+                        alert(data);
+                    }
+                });
+            });
+        }
+    };
+</script>
+</body>
+</html>
