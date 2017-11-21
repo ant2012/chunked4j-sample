@@ -1,6 +1,5 @@
 package ru.ant.chunked4j.sample;
 
-import ru.ant.chunked4j.ChunkException;
 import ru.ant.chunked4j.ChunkService;
 
 import javax.json.Json;
@@ -18,7 +17,7 @@ public class ChunkedServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             ChunkService.getInstance().putChunk(request);
-        } catch (ChunkException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
