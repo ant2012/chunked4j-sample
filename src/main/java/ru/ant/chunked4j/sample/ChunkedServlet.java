@@ -2,7 +2,6 @@ package ru.ant.chunked4j.sample;
 
 import ru.ant.chunked4j.ChunkException;
 import ru.ant.chunked4j.ChunkService;
-import ru.ant.chunked4j.ChunkUploadResult;
 
 import javax.json.Json;
 import javax.servlet.ServletException;
@@ -12,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
 
 @WebServlet(name = "ChunkedServlet",urlPatterns = "/chunked/")
 public class ChunkedServlet extends HttpServlet {
@@ -26,10 +26,10 @@ public class ChunkedServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String fileId = request.getParameter("fileId");
         if(fileId != null){
-            ChunkUploadResult result = ChunkService.getInstance().getUploadResult(fileId);
+            Serializable result = ChunkService.getInstance().getUploadResult(fileId);
             if(result != null){
                 PrintWriter writer = response.getWriter();
-                String resp = getJsonString((SimpleFileResult) result.getResult());
+                String resp = getJsonString((SimpleFileResult) result);
                 writer.write(resp);
             }
         }

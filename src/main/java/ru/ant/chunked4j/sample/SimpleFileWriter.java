@@ -5,7 +5,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.ant.chunked4j.ChunkInputStream;
 import ru.ant.chunked4j.ChunkStreamReader;
-import ru.ant.chunked4j.ChunkUploadResult;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -38,9 +37,9 @@ public class SimpleFileWriter extends ChunkStreamReader<SimpleFileResult> {
     }
 
     @Override
-    public ChunkUploadResult<SimpleFileResult> getResult() {
+    public SimpleFileResult getResult() {
         SimpleFileResult result = new SimpleFileResult();
         result.setFilePath(root + "/" + stream.getFileName());
-        return new ChunkUploadResult<>(result);
+        return result;
     }
 }
